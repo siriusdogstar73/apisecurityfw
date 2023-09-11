@@ -1,0 +1,214 @@
+openapi: 3.0.1
+info:
+  title: api-sirius-secure
+  description: api-sirius-secure
+  contact:
+    name: sirius
+    email: jjgala@minsait.com
+  version: v1
+servers:
+  - url: /
+security:
+  - default: []
+tags:
+  - name: api-sirius-secure
+paths:
+  /login:
+    post:
+      tags:
+        - api-sirius-secure
+      description: loginpost
+      operationId: loginpost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                client_id:
+                  type: string
+                  minLength: 1
+                client_secret:
+                  type: string
+                  minLength: 1
+              required:
+                - client_id
+                - client_secret
+              x-examples:
+                example-1:
+                  client_id: dcf1ffa9-d0c4-410a-8f65-c6185c24f4a9
+                  client_secret: cfa26025-7c7e-452b-829e-c1673dcacb35
+            examples:
+              loginExample:
+                value:
+                  client_id: dcf1ffa9-d0c4-410a-8f65-c6185c24f4a9
+                  client_secret: cfa26025-7c7e-452b-829e-c1673dcacb35
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  access_token_ecies:
+                    type: string
+                    minLength: 1
+                required:
+                  - access_token_ecies
+                x-examples:
+                  example-1:
+                    access_token_ecies: 0280b04df23fbcc23b7b287338cba5977283ccc6077c6fca9078bc740f1197295f
+              examples:
+                example-1:
+                  value:
+                    access_token_ecies: 0280b04df23fbcc23b7b287338cba5977283ccc6077c6fca9078bc740f1197295f
+  /token:
+    post:
+      tags:
+        - api-sirius-secure
+      description: authpost
+      operationId: authpost
+      parameters:
+        - name: grant_type
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: password
+        - name: username
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: admin
+        - name: password
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: admin
+        - name: scope
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: 'apim:api_key%20apim:app_import_export%20apim:app_manage%20apim:store_settings%20apim:sub_alert_manage%20apim:sub_manage%20apim:subscribe%20openid'
+        - name: Authorization
+          in: header
+          required: false
+          style: simple
+          explode: false
+          schema:
+            type: string
+          example: Basic YWZYa05aWGhRVW9ueUxWeHFXVml0N0V2dmJJYTp5UXdBMXlMSlFPQ0o5c1U2c3BkektIdGhKOEFh
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                required:
+                  - access_token
+                  - expires_in
+                  - id_token
+                  - refresh_token
+                  - scope
+                  - token_type
+                type: object
+                properties:
+                  access_token:
+                    minLength: 1
+                    type: string
+                  refresh_token:
+                    minLength: 1
+                    type: string
+                  scope:
+                    minLength: 1
+                    type: string
+                  id_token:
+                    minLength: 1
+                    type: string
+                  token_type:
+                    minLength: 1
+                    type: string
+                  expires_in:
+                    type: number
+                x-examples:
+                  example-1:
+                    access_token: eyJ4NXQiOiJNell4TW1Ga09HWXdNV0kwWldObU5EY3hOR1l3WW1NNFpUQTNNV0kyTkRBelpHUXpOR00wWkdSbE5qSmtPREZrWkRSaU9URmtNV0ZoTXpVMlpHVmxOZyIsImtpZCI6Ik16WXhNbUZrT0dZd01XSTBaV05tTkRjeE5HWXdZbU00WlRBM01XSTJOREF6WkdRek5HTTBaR1JsTmpKa09ERmtaRFJpT1RGa01XRmhNelUyWkdWbE5nX1JTMjU2IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJhZG1pbiIsImF1dCI6IkFQUExJQ0FUSU9OX1VTRVIiLCJhdWQiOiJhZlhrTlpYaFFVb255TFZ4cVdWaXQ3RXZ2YklhIiwibmJmIjoxNjQwNzIxMTEzLCJhenAiOiJhZlhrTlpYaFFVb255TFZ4cVdWaXQ3RXZ2YklhIiwic2NvcGUiOiJhcGltOmFwaV9rZXkgYXBpbTphcHBfaW1wb3J0X2V4cG9ydCBhcGltOmFwcF9tYW5hZ2UgYXBpbTpzdG9yZV9zZXR0aW5ncyBhcGltOnN1Yl9hbGVydF9tYW5hZ2UgYXBpbTpzdWJfbWFuYWdlIGFwaW06c3Vic2NyaWJlIG9wZW5pZCIsImlzcyI6Imh0dHBzOlwvXC9sb2NhbGhvc3Q6OTQ0M1wvb2F1dGgyXC90b2tlbiIsImV4cCI6MTY0MDcyNDcxMywiaWF0IjoxNjQwNzIxMTEzLCJqdGkiOiJkODFjOTZjOC1iMzc5LTRjNGUtOWQxOS03NzBkZjlhMDgwMTkifQ.Z4qFiWPvul_gahywWqmo-aY35HEazQ3_sKrC4_3dVUYKRwBCr5fUoL_oSsvk1W94FGbA-kUOkQh-LaGInRJfSMeN6u1iPn_CP1QPIPohixJW6y9DNFkyGogwNOEOAri_0-06z-XJ4SI-fgLISwSkRBC6bjmIprrPXQ6OnwCx7eNDJessNQ9-ySWYIB27OvdWpdcDCisnoFnStUrohHZiB6vSzxh_2hkFeKjqwkISPJOQpiXKW7uKLTaRc3g6WPKixsCrvoOnAaaFxjsDFhr4-LKfltugHfnETTejFPLWPlylITwUwf7ziz_BykUqvOge8NgGwV8cdOU8QSBO1Xib0g
+                    refresh_token: 60e3002f-2a35-370e-8726-0b712ee12c4b
+                    scope: 'apim:api_key apim:app_import_export apim:app_manage apim:store_settings apim:sub_alert_manage apim:sub_manage apim:subscribe openid'
+                    id_token: eyJ4NXQiOiJNell4TW1Ga09HWXdNV0kwWldObU5EY3hOR1l3WW1NNFpUQTNNV0kyTkRBelpHUXpOR00wWkdSbE5qSmtPREZrWkRSaU9URmtNV0ZoTXpVMlpHVmxOZyIsImtpZCI6Ik16WXhNbUZrT0dZd01XSTBaV05tTkRjeE5HWXdZbU00WlRBM01XSTJOREF6WkdRek5HTTBaR1JsTmpKa09ERmtaRFJpT1RGa01XRmhNelUyWkdWbE5nX1JTMjU2IiwiYWxnIjoiUlMyNTYifQ.eyJhdF9oYXNoIjoiX1pJQTN3Z2d5YkdsaE5YNC1SS29tUSIsImF1ZCI6ImFmWGtOWlhoUVVvbnlMVnhxV1ZpdDdFdnZiSWEiLCJzdWIiOiJhZG1pbiIsIm5iZiI6MTY0MDcyMTExMywiYXpwIjoiYWZYa05aWGhRVW9ueUxWeHFXVml0N0V2dmJJYSIsImFtciI6WyJwYXNzd29yZCJdLCJpc3MiOiJodHRwczpcL1wvbG9jYWxob3N0Ojk0NDNcL29hdXRoMlwvdG9rZW4iLCJleHAiOjE2NDA3MjQ3MTMsImlhdCI6MTY0MDcyMTExM30.An9_okE4qVTMfoJdAB5T1AzlOUk6emI0aSvJRloUUY6ZEdhFQqU662A4MgTycPuzX5qfVZWEVWO59WEiipZJBBm9QVBrlWqKYv-rWO6SqBQVO-YzyWm_-nACL-zxoTYTpQ7LwIKwGT-loVw9kToXtqntn-ztKsUahwnQjMcrQVQ3jNsC_VVQQncqxeJApfKUzg6S74YvQ4tKZBA6y9whIx34ulmEOKaoRJBJY1x0b1f97TN4-XQcHBGbeLXmJ6jMu4tT1Pz7ea7qcVCAKDCpAuc8FOb42c2q7nJehmYDO4U4nptdadr2jnb2EDEXp_jdbacFBpErS8VuuSl9TD0nKw
+                    token_type: Bearer
+                    expires_in: 3600
+              examples:
+                tokenExample:
+                  value:
+                    access_token: eyJ4NXQiOiJNell4TW1Ga09HWXdNV0kwWldObU5EY3hOR1l3WW1NNFpUQTNNV0kyTkRBelpHUXpOR00wWkdSbE5qSmtPREZrWkRSaU9URmtNV0ZoTXpVMlpHVmxOZyIsImtpZCI6Ik16WXhNbUZrT0dZd01XSTBaV05tTkRjeE5HWXdZbU00WlRBM01XSTJOREF6WkdRek5HTTBaR1JsTmpKa09ERmtaRFJpT1RGa01XRmhNelUyWkdWbE5nX1JTMjU2IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJhZG1pbiIsImF1dCI6IkFQUExJQ0FUSU9OX1VTRVIiLCJhdWQiOiJhZlhrTlpYaFFVb255TFZ4cVdWaXQ3RXZ2YklhIiwibmJmIjoxNjQwNzIxMTEzLCJhenAiOiJhZlhrTlpYaFFVb255TFZ4cVdWaXQ3RXZ2YklhIiwic2NvcGUiOiJhcGltOmFwaV9rZXkgYXBpbTphcHBfaW1wb3J0X2V4cG9ydCBhcGltOmFwcF9tYW5hZ2UgYXBpbTpzdG9yZV9zZXR0aW5ncyBhcGltOnN1Yl9hbGVydF9tYW5hZ2UgYXBpbTpzdWJfbWFuYWdlIGFwaW06c3Vic2NyaWJlIG9wZW5pZCIsImlzcyI6Imh0dHBzOlwvXC9sb2NhbGhvc3Q6OTQ0M1wvb2F1dGgyXC90b2tlbiIsImV4cCI6MTY0MDcyNDcxMywiaWF0IjoxNjQwNzIxMTEzLCJqdGkiOiJkODFjOTZjOC1iMzc5LTRjNGUtOWQxOS03NzBkZjlhMDgwMTkifQ.Z4qFiWPvul_gahywWqmo-aY35HEazQ3_sKrC4_3dVUYKRwBCr5fUoL_oSsvk1W94FGbA-kUOkQh-LaGInRJfSMeN6u1iPn_CP1QPIPohixJW6y9DNFkyGogwNOEOAri_0-06z-XJ4SI-fgLISwSkRBC6bjmIprrPXQ6OnwCx7eNDJessNQ9-ySWYIB27OvdWpdcDCisnoFnStUrohHZiB6vSzxh_2hkFeKjqwkISPJOQpiXKW7uKLTaRc3g6WPKixsCrvoOnAaaFxjsDFhr4-LKfltugHfnETTejFPLWPlylITwUwf7ziz_BykUqvOge8NgGwV8cdOU8QSBO1Xib0g
+                    refresh_token: 60e3002f-2a35-370e-8726-0b712ee12c4b
+                    scope: 'apim:api_key apim:app_import_export apim:app_manage apim:store_settings apim:sub_alert_manage apim:sub_manage apim:subscribe openid'
+                    id_token: eyJ4NXQiOiJNell4TW1Ga09HWXdNV0kwWldObU5EY3hOR1l3WW1NNFpUQTNNV0kyTkRBelpHUXpOR00wWkdSbE5qSmtPREZrWkRSaU9URmtNV0ZoTXpVMlpHVmxOZyIsImtpZCI6Ik16WXhNbUZrT0dZd01XSTBaV05tTkRjeE5HWXdZbU00WlRBM01XSTJOREF6WkdRek5HTTBaR1JsTmpKa09ERmtaRFJpT1RGa01XRmhNelUyWkdWbE5nX1JTMjU2IiwiYWxnIjoiUlMyNTYifQ.eyJhdF9oYXNoIjoiX1pJQTN3Z2d5YkdsaE5YNC1SS29tUSIsImF1ZCI6ImFmWGtOWlhoUVVvbnlMVnhxV1ZpdDdFdnZiSWEiLCJzdWIiOiJhZG1pbiIsIm5iZiI6MTY0MDcyMTExMywiYXpwIjoiYWZYa05aWGhRVW9ueUxWeHFXVml0N0V2dmJJYSIsImFtciI6WyJwYXNzd29yZCJdLCJpc3MiOiJodHRwczpcL1wvbG9jYWxob3N0Ojk0NDNcL29hdXRoMlwvdG9rZW4iLCJleHAiOjE2NDA3MjQ3MTMsImlhdCI6MTY0MDcyMTExM30.An9_okE4qVTMfoJdAB5T1AzlOUk6emI0aSvJRloUUY6ZEdhFQqU662A4MgTycPuzX5qfVZWEVWO59WEiipZJBBm9QVBrlWqKYv-rWO6SqBQVO-YzyWm_-nACL-zxoTYTpQ7LwIKwGT-loVw9kToXtqntn-ztKsUahwnQjMcrQVQ3jNsC_VVQQncqxeJApfKUzg6S74YvQ4tKZBA6y9whIx34ulmEOKaoRJBJY1x0b1f97TN4-XQcHBGbeLXmJ6jMu4tT1Pz7ea7qcVCAKDCpAuc8FOb42c2q7nJehmYDO4U4nptdadr2jnb2EDEXp_jdbacFBpErS8VuuSl9TD0nKw
+                    token_type: Bearer
+                    expires_in: 3600
+      security:
+        - default: []
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-application-security:
+        security-types:
+          - basic_auth
+        optional: false
+components:
+  securitySchemes:
+    default:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          scopes: {}
+x-wso2-auth-header: Authorization
+x-wso2-cors:
+  corsConfigurationEnabled: false
+  accessControlAllowOrigins:
+    - '*'
+  accessControlAllowCredentials: false
+  accessControlAllowHeaders:
+    - authorization
+    - Access-Control-Allow-Origin
+    - Content-Type
+    - SOAPAction
+    - apikey
+    - testKey
+  accessControlAllowMethods:
+    - GET
+    - PUT
+    - POST
+    - DELETE
+    - PATCH
+    - OPTIONS
+x-wso2-production-endpoints:
+  urls:
+    - 'https://localhost:8243'
+  type: http
+x-wso2-sandbox-endpoints:
+  urls:
+    - 'https://localhost:8243'
+  type: http
+x-wso2-basePath: /sirius-secure/v1
+x-wso2-transports:
+  - http
+  - https
+x-wso2-response-cache:
+  enabled: false
+  cacheTimeoutInSeconds: 300

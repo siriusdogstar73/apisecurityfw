@@ -1,0 +1,175 @@
+openapi: 3.0.1
+info:
+  title: api-sirius-login
+  description: api-sirius-login
+  contact:
+    name: sirius
+    email: sirius@msirius.com
+  version: v1
+servers:
+  - url: /
+security:
+  - default: []
+tags:
+  - name: Dispatcher
+  - name: Login
+  - name: Onboarding
+paths:
+  /token:
+    get:
+      tags:
+        - Login
+      description: Onboarding new users
+      operationId: siriusLogin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/payloadReqInfo'
+            examples:
+              loginReqInfo:
+                value:
+                  payload: Login payload
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payloadReqInfo'
+              examples:
+                loginResInfo:
+                  value:
+                    payload: Login payload
+      security:
+        - default: []
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-application-security:
+        security-types:
+          - api_key
+          - oauth2
+        optional: false
+  '/token/{idConsumer}':
+    post:
+      description: |-
+        -Onboarding new users. Step 02
+          Save encrypted payload in Redis
+          Desencrypted payload
+            1. Last payload
+            2. Next Public Frontend Certificate frontPublicKey
+            4. Email (optional)
+            5. Generic app credentials
+            6. Operation step
+          Fire and forget
+            1. Next Backend certificate as backPublicKey + backPrivateKey
+            2. Next path response
+            3. Operation step
+            4. Next payload
+            5. Next public Frontend certificate frontPublicKey
+          Reply to front with new frontPublicKey encryp
+            1. Next path response
+            2. Last payload 
+            3. Especific user credentials
+            4. Next Public Backend Certificate BackPublicKey
+            5. Next operation step (finished process, Step 03)
+      operationId: responseIdConsumer
+      tags:
+        - Login
+      parameters:
+        - $ref: '#/components/parameters/idConsumer'
+        - $ref: '#/components/parameters/X-Sirius-Basic-Auth'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payloadReqInfo'
+              examples:
+                reponseReqInfo:
+                  value:
+                    payload: Response payload
+      security:
+        - default: []
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-application-security:
+        security-types:
+          - oauth2
+        optional: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/payloadReqInfo'
+            examples:
+              reponseResInfo:
+                value:
+                  payload: Response payload
+components:
+  schemas:
+    payloadReqInfo:
+      properties:
+        payload:
+          type: string
+          description: Payload
+          example: Onboarding payload
+  securitySchemes:
+    default:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          scopes: {}
+  parameters:
+    idConsumer:
+      name: idConsumer
+      in: path
+      required: true
+      schema:
+        type: string
+    X-Sirius-Basic-Auth:
+      in: header
+      name: X-Sirius-Basic-Auth
+      description: 'Ecies(Basic consumerKey:consumerSecret)'
+      required: true
+      example: manual
+      schema:
+        type: string
+x-wso2-auth-header: Authorization
+x-wso2-cors:
+  corsConfigurationEnabled: true
+  accessControlAllowOrigins:
+    - '*'
+  accessControlAllowCredentials: false
+  accessControlAllowHeaders:
+    - authorization
+    - Access-Control-Allow-Origin
+    - Content-Type
+    - SOAPAction
+    - apikey
+    - testKey
+    - x-request-tracking-id
+  accessControlAllowMethods:
+    - GET
+    - PUT
+    - POST
+    - DELETE
+    - PATCH
+    - OPTIONS
+x-wso2-production-endpoints:
+  urls:
+    - 'http://172.18.0.1:33000'
+  type: http
+x-wso2-sandbox-endpoints:
+  urls:
+    - 'http://172.17.0.1:4012'
+  type: http
+x-wso2-basePath: /sirius/login/v1
+x-wso2-transports:
+  - http
+  - https
+x-wso2-response-cache:
+  enabled: false
+  cacheTimeoutInSeconds: 300

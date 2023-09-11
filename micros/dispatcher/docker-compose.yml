@@ -1,0 +1,8 @@
+version: "3.3"
+services:
+  dispatcher:
+    build: .
+    container_name: "dispatcher"
+    restart: always
+    ports:
+      - 33000:33000

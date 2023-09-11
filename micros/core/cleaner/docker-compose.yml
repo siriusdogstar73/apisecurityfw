@@ -1,0 +1,9 @@
+version: "3.3"
+services:
+  cleaner:
+    build: .
+    container_name: "cleaner"
+    restart: always
+    ports:
+      - 33005:33005
+      - 7882:7882

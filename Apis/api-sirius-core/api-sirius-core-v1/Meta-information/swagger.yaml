@@ -1,0 +1,250 @@
+openapi: 3.0.1
+info:
+  title: api-sirius-core
+  description: api-sirius-core
+  contact:
+    name: sirius
+    email: sirius@msirius.com
+  version: v1
+servers:
+  - url: /
+security:
+  - default: []
+paths:
+  /onboarding:
+    post:
+      description: Onboarding new users
+      operationId: siriusOnboarding
+      tags:
+        - Onboarding
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/onboardingReqInfo'
+              examples:
+                onboardingResInfo:
+                  value:
+                    credentialInfo:
+                      deviceInfo: deviceInfo
+                      faceInfo: faceInfo
+                      nextFrontPublicKeyInfo: nextFrontPublicKeyInfo
+                      nextBackPublicKey: nextBackPublicKey
+                      nextBackPrivateKey: nextBackPrivateKey
+                      email: email@email.com
+                      locationId: locationId
+                    nextPayload: nextPayload
+                    idConsumer: Uri request
+                    step: '01'
+      security:
+        - default: []
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-application-security:
+        security-types:
+          - oauth2
+        optional: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/onboardingReqInfo'
+            examples:
+              onboardingReqInfo:
+                value:
+                  credentialInfo:
+                    deviceInfo: deviceInfo
+                    faceInfo: faceInfo
+                    nextFrontPublicKeyInfo: nextFrontPublicKeyInfo
+                    nextBackPublicKey: nextBackPublicKey
+                    nextBackPrivateKey: nextBackPrivateKey
+                    email: email@email.com
+                    locationId: locationId
+                  nextPayload: nextPayload
+                  idConsumer: Uri request
+                  step: '01'
+  /login:
+    post:
+      description: Onboarding new users
+      operationId: siriusLogin
+      tags:
+        - Login
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payloadReqInfo'
+              examples:
+                loginResInfo:
+                  value:
+                    payload: Login payload
+      security:
+        - default: []
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-application-security:
+        security-types:
+          - oauth2
+        optional: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/payloadReqInfo'
+            examples:
+              loginReqInfo:
+                value:
+                  payload: Login payload
+  /dispatcher:
+    post:
+      description: |-
+        -Onboarding new users. Step 01
+          -Receive and save encrypted payload
+            1. Device Info
+            2. Face Info
+            3. Next Public Frontend Certificate frontPublicKey
+            4. Email (optional)
+            5. Operation step
+            6. Location info
+          -Save next Backend Certificate as backPublicKey + backPrivateKey
+          -Save next path response
+          -Save especific user credentials
+          -Save next payload
+          -Save next public Frontend certificate frontPublicKey
+          -No reply. By the RSocket protocol,
+            (fire and forget), there is no response
+      operationId: siriusDispatcher
+      tags:
+        - Dispatcher
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payloadReqInfo'
+              examples:
+                dispatcherResInfo:
+                  value:
+                    payload: Payload
+      security:
+        - default: []
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-application-security:
+        security-types:
+          - oauth2
+        optional: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/payloadReqInfo'
+            examples:
+              dispatcherReqInfo:
+                value:
+                  payload: Payload
+components:
+  schemas:
+    onboardingReqInfo:
+      properties:
+        credentialInfo:
+          $ref: '#/components/schemas/credentialInfo'
+        nextPayload:
+          type: string
+          description: nextPayload
+          example: nextPayload
+        idConsumer:
+          type: string
+          description: idConsumer
+          example: Uri request
+        step:
+          type: string
+          description: Step inside process
+          example: '01'
+    credentialInfo:
+      properties:
+        deviceInfo:
+          type: string
+          description: deviceInfo
+          example: deviceInfo
+        faceInfo:
+          type: string
+          description: faceInfo
+          example: faceInfo
+        nextFrontPublicKeyInfo:
+          type: string
+          description: nextFrontPublicKeyInfo
+          example: nextFrontPublicKeyInfo
+        nextBackPublicKey:
+          type: string
+          description: nextBackPublicKey
+          example: nextBackPublicKey
+        nextBackPrivateKey:
+          type: string
+          description: nextBackPrivateKey
+          example: nextBackPrivateKey
+        email:
+          type: string
+          description: email
+          example: email@email.com
+        locationId:
+          type: string
+          description: locationId
+          example: locationId
+    payloadReqInfo:
+      properties:
+        payload:
+          type: string
+          description: Payload
+          example: Onboarding payload
+  securitySchemes:
+    default:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          scopes: {}
+x-wso2-auth-header: Authorization
+x-wso2-cors:
+  corsConfigurationEnabled: false
+  accessControlAllowOrigins:
+    - '*'
+  accessControlAllowCredentials: false
+  accessControlAllowHeaders:
+    - authorization
+    - Access-Control-Allow-Origin
+    - Content-Type
+    - SOAPAction
+    - apikey
+    - testKey
+  accessControlAllowMethods:
+    - GET
+    - PUT
+    - POST
+    - DELETE
+    - PATCH
+    - OPTIONS
+x-wso2-production-endpoints:
+  urls:
+    - 'http://localhost'
+  type: http
+x-wso2-sandbox-endpoints:
+  urls:
+    - 'http://localhost'
+  type: http
+x-wso2-basePath: /sirius/dispatcher/v1
+x-wso2-transports:
+  - http
+  - https
+x-wso2-response-cache:
+  enabled: false
+  cacheTimeoutInSeconds: 300
+tags:
+  - name: Dispatcher
+  - name: Login
+  - name: Onboarding

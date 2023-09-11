@@ -1,0 +1,9 @@
+version: "3.3"
+services:
+  register:
+    build: .
+    container_name: "register"
+    restart: always
+    ports:
+      - 33001:33001
+      - 7878:7878

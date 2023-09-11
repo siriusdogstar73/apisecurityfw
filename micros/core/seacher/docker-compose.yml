@@ -1,0 +1,9 @@
+version: "3.3"
+services:
+  seacher:
+    build: .
+    container_name: "seacher"
+    restart: always
+    ports:
+      - 33002:33002
+      - 7879:7879

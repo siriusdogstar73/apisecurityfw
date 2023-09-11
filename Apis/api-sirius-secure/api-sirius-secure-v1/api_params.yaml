@@ -1,0 +1,11 @@
+environments:
+  - name: local
+    endpoints:
+      production: 
+        url: https://localhost:8243
+      sandbox:
+        url: https://localhost:8243
+deploy:
+  import:
+    update: true
+    preserveProvider: true

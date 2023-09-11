@@ -1,0 +1,232 @@
+openapi: 3.0.1
+info:
+  title: api-sirius-dispatcher
+  description: api-sirius-dispatcher
+  contact:
+    name: sirius
+    email: sirius@msirius.com
+  version: v1
+servers:
+  - url: /
+security:
+  - default: []
+paths:
+  /onboarding:
+    post:
+      description: |-
+        -Onboarding new users. Step 01
+          Save encrypted payload in Redis
+          Desencrypted payload
+            1. Device Info
+            2. Face Info
+            3. Next Public Frontend certificate frontPublicKey
+            4. Email (optional)
+            5. Generic app credentials
+            6. Operation step
+            7. Location info
+          Fire and forget
+            1. Next Backend certificate as backPublicKey + backPrivateKey
+            2. Next path response
+            3. Operation step
+            4. Next payload
+            5. Next Public Frontend certificate frontPublicKey
+          -Reply to front with new frontPublicKey encryp
+            1. Path response
+            2. Last payload 
+            3. Next Public Backend Certificate BackPublicKey
+            4. Next operation step
+            5. Next public Frontend certificate frontPublicKey
+      operationId: siriusOnboarding
+      tags:
+        - Onboarding
+      parameters:
+        - $ref: '#/components/parameters/uuid'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payloadReqInfo'
+              examples:
+                payloadResInfo:
+                  value:
+                    payload: Onboarding payload
+                    step: '01'
+      security:
+        - default: []
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-application-security:
+        security-types:
+          - oauth2
+        optional: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/payloadReqInfo'
+            examples:
+              payloadReqInfo:
+                value:
+                  payload: Onboarding payload
+                  step: '01'
+  /test:
+    post:
+      description: '-Business test'
+      operationId: siriusTest
+      tags:
+        - Test
+      parameters:
+        - $ref: '#/components/parameters/uuid'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payloadReqInfo'
+              examples:
+                payloadResInfo:
+                  value:
+                    payload: Test payload
+                    step: '01'
+      security:
+        - default: []
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-application-security:
+        security-types:
+          - oauth2
+        optional: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/payloadReqInfo'
+            examples:
+              payloadReqInfo:
+                value:
+                  payload: Test payload
+                  step: '01'
+  /login:
+    post:
+      description: Onboarding new users
+      operationId: siriusLogin
+      tags:
+        - Login
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payloadReqInfo'
+              examples:
+                loginResInfo:
+                  value:
+                    payload: Login payload
+      security:
+        - default: []
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-application-security:
+        security-types:
+          - oauth2
+        optional: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/payloadReqInfo'
+            examples:
+              loginReqInfo:
+                value:
+                  payload: Login payload
+  /publicKey:
+    get:
+      description: Public key for clients
+      operationId: publicKey
+      tags:
+        - Login
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payloadReqInfo'
+              examples:
+                publicKeyResInfo:
+                  value:
+                    payload: Encrypted payload
+      security:
+        - default: []
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-application-security:
+        security-types:
+          - oauth2
+        optional: false
+components:
+  schemas:
+    payloadReqInfo:
+      properties:
+        payload:
+          type: string
+          description: Payload
+          example: Onboarding payload
+  securitySchemes:
+    default:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          scopes: {}
+  parameters:
+    uuid:
+      name: uuid
+      in: query
+      required: false
+      schema:
+        type: string
+x-wso2-auth-header: Authorization
+x-wso2-cors:
+  corsConfigurationEnabled: false
+  accessControlAllowOrigins:
+    - '*'
+  accessControlAllowCredentials: false
+  accessControlAllowHeaders:
+    - authorization
+    - Access-Control-Allow-Origin
+    - Content-Type
+    - SOAPAction
+    - apikey
+    - testKey
+  accessControlAllowMethods:
+    - GET
+    - PUT
+    - POST
+    - DELETE
+    - PATCH
+    - OPTIONS
+x-wso2-production-endpoints:
+  urls:
+    - 'http://localhost'
+  type: http
+x-wso2-sandbox-endpoints:
+  urls:
+    - 'http://localhost'
+  type: http
+x-wso2-basePath: /sirius/dispatcher/v1
+x-wso2-transports:
+  - http
+  - https
+x-wso2-response-cache:
+  enabled: false
+  cacheTimeoutInSeconds: 300
+tags:
+  - name: Login
+  - name: Onboarding
+  - name: Response
+  - name: Test

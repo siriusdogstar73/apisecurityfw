@@ -1,0 +1,82 @@
+id:
+  providerName: admin
+  apiName: api-sirius-login
+  version: v1
+  id: 0
+uuid: cb7eb157-4165-4a7f-acf8-35c3bdd73d7e
+type: HTTP
+context: /sirius/login/v1
+contextTemplate: /sirius/login/{version}
+tags: []
+documents: []
+lastUpdated: Apr 5, 2022, 5:53:10 PM
+availableTiers:
+ -
+  name: Bronze
+  displayName: Bronze
+  description: Allows 1000 requests per minute
+  requestsPerMin: 1000
+  requestCount: 1000
+  unitTime: 1
+  timeUnit: min
+  tierPlan: FREE
+  stopOnQuotaReached: true
+availableSubscriptionLevelPolicies: []
+uriTemplates: []
+apiHeaderChanged: false
+apiResourcePatternsChanged: false
+status: PUBLISHED
+visibility: public
+gatewayLabels: []
+endpointSecured: false
+endpointAuthDigest: false
+transports: http,https
+advertiseOnly: false
+subscriptionAvailability: current_tenant
+corsConfiguration:
+  corsConfigurationEnabled: true
+  accessControlAllowOrigins:
+   - '*'
+  accessControlAllowCredentials: false
+  accessControlAllowHeaders:
+   - authorization
+   - Access-Control-Allow-Origin
+   - Content-Type
+   - SOAPAction
+   - apikey
+   - testKey
+   - x-request-tracking-id
+  accessControlAllowMethods:
+   - GET
+   - PUT
+   - POST
+   - DELETE
+   - PATCH
+   - OPTIONS
+endpointConfig: '{"endpoint_type":"http","sandbox_endpoints":{"url":"http:\/\/172.17.0.1:4012"},"production_endpoints":{"url":"http:\/\/172.18.0.1:33000"}}'
+responseCache: Disabled
+cacheTimeout: 300
+implementation: ENDPOINT
+authorizationHeader: Authorization
+scopes: []
+isDefaultVersion: false
+isPublishedDefaultVersion: false
+keyManagers:
+ - all
+environments:
+ - Production and Sandbox
+createdTime: "1647187422000"
+additionalProperties: {}
+monetizationProperties: {}
+isMonetizationEnabled: false
+environmentList:
+ - SANDBOX
+ - PRODUCTION
+apiSecurity: oauth_basic_auth_api_key_mandatory,api_key,oauth2
+endpoints: []
+enableSchemaValidation: false
+apiCategories: []
+enableStore: true
+accessControl: all
+rating: 0.0
+isLatest: true

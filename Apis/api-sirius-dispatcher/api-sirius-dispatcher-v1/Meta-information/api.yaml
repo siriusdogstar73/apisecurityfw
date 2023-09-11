@@ -1,0 +1,81 @@
+id:
+  providerName: admin
+  apiName: api-sirius-dispatcher
+  version: v1
+  id: 0
+uuid: c68b681e-5e44-492b-be60-afa185107d8f
+type: HTTP
+context: /sirius/dispatcher/v1
+contextTemplate: /sirius/dispatcher/{version}
+tags: []
+documents: []
+lastUpdated: Feb 16, 2022, 5:41:07 PM
+availableTiers:
+ -
+  name: Bronze
+  displayName: Bronze
+  description: Allows 1000 requests per minute
+  requestsPerMin: 1000
+  requestCount: 1000
+  unitTime: 1
+  timeUnit: min
+  tierPlan: FREE
+  stopOnQuotaReached: true
+availableSubscriptionLevelPolicies: []
+uriTemplates: []
+apiHeaderChanged: false
+apiResourcePatternsChanged: false
+status: PUBLISHED
+visibility: public
+gatewayLabels: []
+endpointSecured: false
+endpointAuthDigest: false
+transports: http,https
+advertiseOnly: false
+subscriptionAvailability: current_tenant
+corsConfiguration:
+  corsConfigurationEnabled: false
+  accessControlAllowOrigins:
+   - '*'
+  accessControlAllowCredentials: false
+  accessControlAllowHeaders:
+   - authorization
+   - Access-Control-Allow-Origin
+   - Content-Type
+   - SOAPAction
+   - apikey
+   - testKey
+  accessControlAllowMethods:
+   - GET
+   - PUT
+   - POST
+   - DELETE
+   - PATCH
+   - OPTIONS
+endpointConfig: '{"endpoint_type":"http","sandbox_endpoints":{"template_not_supported":false,"url":"http:\/\/localhost"},"failOver":"False","production_endpoints":{"template_not_supported":false,"url":"http:\/\/localhost"}}'
+responseCache: Disabled
+cacheTimeout: 300
+implementation: ENDPOINT
+authorizationHeader: Authorization
+scopes: []
+isDefaultVersion: false
+isPublishedDefaultVersion: false
+keyManagers:
+ - all
+environments:
+ - Production and Sandbox
+createdTime: "1645033221000"
+additionalProperties: {}
+monetizationProperties: {}
+isMonetizationEnabled: false
+environmentList:
+ - SANDBOX
+ - PRODUCTION
+apiSecurity: oauth2,oauth_basic_auth_api_key_mandatory
+endpoints: []
+enableSchemaValidation: false
+apiCategories: []
+enableStore: true
+accessControl: all
+rating: 0.0
+isLatest: true

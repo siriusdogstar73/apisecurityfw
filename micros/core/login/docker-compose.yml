@@ -1,0 +1,9 @@
+version: "3.3"
+services:
+  login:
+    build: .
+    container_name: "login"
+    restart: always
+    ports:
+      - 33004:33004
+      - 7881:7881

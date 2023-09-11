@@ -1,0 +1,81 @@
+id:
+  providerName: admin
+  apiName: api-sirius-secure
+  version: v1
+  id: 0
+uuid: 43c48848-7d5d-46dc-8a5c-73ea6b764166
+type: HTTP
+context: /sirius-secure/v1
+contextTemplate: /sirius-secure/{version}
+tags: []
+documents: []
+lastUpdated: Dec 28, 2021, 9:39:08 PM
+availableTiers:
+ -
+  name: Bronze
+  displayName: Bronze
+  description: Allows 1000 requests per minute
+  requestsPerMin: 1000
+  requestCount: 1000
+  unitTime: 1
+  timeUnit: min
+  tierPlan: FREE
+  stopOnQuotaReached: true
+availableSubscriptionLevelPolicies: []
+uriTemplates: []
+apiHeaderChanged: false
+apiResourcePatternsChanged: false
+status: PUBLISHED
+visibility: public
+gatewayLabels: []
+endpointSecured: false
+endpointAuthDigest: false
+transports: http,https
+advertiseOnly: false
+subscriptionAvailability: current_tenant
+corsConfiguration:
+  corsConfigurationEnabled: false
+  accessControlAllowOrigins:
+   - '*'
+  accessControlAllowCredentials: false
+  accessControlAllowHeaders:
+   - authorization
+   - Access-Control-Allow-Origin
+   - Content-Type
+   - SOAPAction
+   - apikey
+   - testKey
+  accessControlAllowMethods:
+   - GET
+   - PUT
+   - POST
+   - DELETE
+   - PATCH
+   - OPTIONS
+endpointConfig: '{"endpoint_type":"http","sandbox_endpoints":{"template_not_supported":false,"url":"https:\/\/localhost:8243"},"endpoint_security":{"production":{"password":"yQwA1yLJQOCJ9sU6spdzKHthJ8Aa","tokenUrl":null,"clientId":null,"clientSecret":null,"customParameters":"{}","additionalProperties":{},"type":"BASIC","grantType":null,"enabled":true,"uniqueIdentifier":null,"username":"afXkNZXhQUonyLVxqWVit7EvvbIa"},"sandbox":{"password":null,"tokenUrl":null,"clientId":null,"clientSecret":null,"customParameters":"{}","additionalProperties":{},"type":null,"grantType":null,"enabled":false,"uniqueIdentifier":null,"username":null}},"failOver":"False","production_endpoints":{"template_not_supported":false,"url":"https:\/\/localhost:8243"}}'
+responseCache: Disabled
+cacheTimeout: 300
+implementation: ENDPOINT
+authorizationHeader: Authorization
+scopes: []
+isDefaultVersion: false
+isPublishedDefaultVersion: false
+keyManagers:
+ - all
+environments:
+ - Production and Sandbox
+createdTime: "1640716651000"
+additionalProperties: {}
+monetizationProperties: {}
+isMonetizationEnabled: false
+environmentList:
+ - SANDBOX
+ - PRODUCTION
+apiSecurity: basic_auth,oauth_basic_auth_api_key_mandatory
+endpoints: []
+enableSchemaValidation: false
+apiCategories: []
+enableStore: true
+accessControl: all
+rating: 0.0
+isLatest: true

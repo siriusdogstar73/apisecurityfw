@@ -1,0 +1,9 @@
+version: "3.3"
+services:
+  error:
+    build: .
+    container_name: "error"
+    restart: always
+    ports:
+      - 33006:33006
+      - 7883:7883

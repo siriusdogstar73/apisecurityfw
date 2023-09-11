@@ -1,0 +1,9 @@
+version: "3.3"
+services:
+  public:
+    build: .
+    container_name: "public"
+    restart: always
+    ports:
+      - 33003:33003
+      - 7880:7880

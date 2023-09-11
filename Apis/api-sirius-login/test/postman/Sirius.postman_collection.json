@@ -1,0 +1,562 @@
+{
+	"info": {
+		"_postman_id": "e5fb0a49-85ad-4451-b011-0b3e55c6e2bc",
+		"name": "Sirius",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Basic Secure Flow",
+			"item": [
+				{
+					"name": "1. Get token simple sirius app",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic dHNNWEFDQ1g1MFFmZ1d3aHp2MHlMdGhDSGtjYTpPc3NYR21TZlFOSnhQaDcxbnJrSE5yalhJRFFh"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:8243/token?grant_type=password&username=admin&password=admin&scope=apim%3Aapi_key%2520apim%3Aapp_import_export%2520apim%3Aapp_manage%2520apim%3Astore_settings%2520apim%3Asub_alert_manage%2520apim%3Asub_manage%2520apim%3Asubscribe%2520openid",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8243",
+							"path": [
+								"token"
+							],
+							"query": [
+								{
+									"key": "grant_type",
+									"value": "password"
+								},
+								{
+									"key": "username",
+									"value": "admin"
+								},
+								{
+									"key": "password",
+									"value": "admin"
+								},
+								{
+									"key": "scope",
+									"value": "apim%3Aapi_key%2520apim%3Aapp_import_export%2520apim%3Aapp_manage%2520apim%3Astore_settings%2520apim%3Asub_alert_manage%2520apim%3Asub_manage%2520apim%3Asubscribe%2520openid"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. Dynamic client registration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = JSON.parse(responseBody);",
+									"var clientId = response.clientId;",
+									"var clientSecret = response.clientSecret;",
+									"pm.collectionVariables.set(\"dcrClientId\", clientId);",
+									"pm.collectionVariables.set(\"dcrClientSecret\", clientSecret);",
+									"",
+									"var base64EncodedCredentials = btoa(clientId + \":\" + clientSecret);",
+									"pm.collectionVariables.set(\"base64EncodedDCRCredentials\", base64EncodedCredentials);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic YWRtaW46YWRtaW4="
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n  \"callbackUrl\":\"www.google.lk\",\n  \"clientName\":\"rest_api_devportal\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n}"
+						},
+						"url": {
+							"raw": "https://localhost:9443/client-registration/v0.17/register",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9443",
+							"path": [
+								"client-registration",
+								"v0.17",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3. Get openid access token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = JSON.parse(responseBody);",
+									"pm.collectionVariables.set(\"access-token\", response.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic {{base64EncodedDCRCredentials}}"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:8243/token?grant_type=password&username=admin&password=admin&scope=apim:api_key apim:app_import_export apim:app_manage apim:store_settings apim:sub_alert_manage apim:sub_manage apim:subscribe openid",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8243",
+							"path": [
+								"token"
+							],
+							"query": [
+								{
+									"key": "grant_type",
+									"value": "password"
+								},
+								{
+									"key": "username",
+									"value": "admin"
+								},
+								{
+									"key": "password",
+									"value": "admin"
+								},
+								{
+									"key": "scope",
+									"value": "apim:api_key apim:app_import_export apim:app_manage apim:store_settings apim:sub_alert_manage apim:sub_manage apim:subscribe openid"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4. Search applications",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer ae315a51-0f26-341e-aa9f-c800e70a86a3"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:9443/api/am/store/v1/applications",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9443",
+							"path": [
+								"api",
+								"am",
+								"store",
+								"v1",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5. Create random application",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = JSON.parse(responseBody);",
+									"pm.collectionVariables.set(\"applicationId\", response.applicationId);",
+									"pm.collectionVariables.set(\"applicationName\", response.name);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const appName = Math.floor((Math.random()*100 +1));",
+									"pm.globals.set(\"appName\", appName);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer ae315a51-0f26-341e-aa9f-c800e70a86a3"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"{{$guid}}\",\n  \"throttlingPolicy\": \"Unlimited\",\n  \"description\": \"Sample calculator application\",\n  \"tokenType\": \"JWT\",\n  \"groups\": [],\n  \"attributes\": {},\n  \"subscriptionScopes\": []\n}"
+						},
+						"url": {
+							"raw": "https://localhost:9443/api/am/store/v1/applications",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9443",
+							"path": [
+								"api",
+								"am",
+								"store",
+								"v1",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6. Generate keys for application",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = JSON.parse(responseBody);",
+									"pm.collectionVariables.set(\"keyMappingId\", response.keyMappingId);",
+									"pm.collectionVariables.set(\"keyManager\", response.keyManager);",
+									"pm.collectionVariables.set(\"appConsumerKey\", response.consumerKey);",
+									"pm.collectionVariables.set(\"appConsumerSecret\", response.consumerSecret);",
+									"",
+									"var base64UserCredentials = btoa(response.consumerKey + \":\" + response.consumerSecret);",
+									"pm.collectionVariables.set(\"base64UserCredentials\", base64UserCredentials);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer b897f2fc-9be9-3204-81cd-f3189b7d04b8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"keyType\": \"PRODUCTION\",\n  \"keyManager\": \"Resident Key Manager\",\n  \"grantTypesToBeSupported\": [\n    \"password\",\n    \"client_credentials\"\n  ],\n  \"callbackUrl\": \"http://sample.com/callback/url\",\n  \"scopes\": [\n    \"am_application_scope\",\n    \"default\"\n  ],\n  \"validityTime\": 3600,\n  \"additionalProperties\": {}\n}"
+						},
+						"url": {
+							"raw": "https://localhost:9443/api/am/store/v1/applications/{{applicationId}}/generate-keys",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9443",
+							"path": [
+								"api",
+								"am",
+								"store",
+								"v1",
+								"applications",
+								"{{applicationId}}",
+								"generate-keys"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7. Add subscriptions for application",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = JSON.parse(responseBody);",
+									"pm.collectionVariables.set(\"subscriptionId\", response.subscriptionId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer b897f2fc-9be9-3204-81cd-f3189b7d04b8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"applicationId\": \"{{applicationId}}\",\n  \"apiId\": \"{{apiDispatcher}}\",\n  \"throttlingPolicy\": \"Bronze\",\n  \"requestedThrottlingPolicy\": \"Bronze\"\n}"
+						},
+						"url": {
+							"raw": "https://localhost:9443/api/am/store/v1/subscriptions",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9443",
+							"path": [
+								"api",
+								"am",
+								"store",
+								"v1",
+								"subscriptions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8. Get token simple user app",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic {{base64UserCredentials}}"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:8243/token?grant_type=password&username=admin&password=admin&scope=apim%3Aapi_key%2520apim%3Aapp_import_export%2520apim%3Aapp_manage%2520apim%3Astore_settings%2520apim%3Asub_alert_manage%2520apim%3Asub_manage%2520apim%3Asubscribe%2520openid",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8243",
+							"path": [
+								"token"
+							],
+							"query": [
+								{
+									"key": "grant_type",
+									"value": "password"
+								},
+								{
+									"key": "username",
+									"value": "admin"
+								},
+								{
+									"key": "password",
+									"value": "admin"
+								},
+								{
+									"key": "scope",
+									"value": "apim%3Aapi_key%2520apim%3Aapp_import_export%2520apim%3Aapp_manage%2520apim%3Astore_settings%2520apim%3Asub_alert_manage%2520apim%3Asub_manage%2520apim%3Asubscribe%2520openid"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. Test api-sirius-dispatcher",
+			"item": [
+				{
+					"name": "1. onboarding",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ4NXQiOiJNell4TW1Ga09HWXdNV0kwWldObU5EY3hOR1l3WW1NNFpUQTNNV0kyTkRBelpHUXpOR00wWkdSbE5qSmtPREZrWkRSaU9URmtNV0ZoTXpVMlpHVmxOZyIsImtpZCI6Ik16WXhNbUZrT0dZd01XSTBaV05tTkRjeE5HWXdZbU00WlRBM01XSTJOREF6WkdRek5HTTBaR1JsTmpKa09ERmtaRFJpT1RGa01XRmhNelUyWkdWbE5nX1JTMjU2IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJhZG1pbkBjYXJib24uc3VwZXIiLCJhdXQiOiJBUFBMSUNBVElPTiIsImF1ZCI6InRzTVhBQ0NYNTBRZmdXd2h6djB5THRoQ0hrY2EiLCJuYmYiOjE2NDU0NjkxMTEsImF6cCI6InRzTVhBQ0NYNTBRZmdXd2h6djB5THRoQ0hrY2EiLCJzY29wZSI6ImRlZmF1bHQiLCJpc3MiOiJodHRwczpcL1wvbG9jYWxob3N0Ojk0NDNcL29hdXRoMlwvdG9rZW4iLCJleHAiOjE2NDU0NzI3MTEsImlhdCI6MTY0NTQ2OTExMSwianRpIjoiZDczNTFiMDItNDYyYS00ZTEwLWE2NjYtYmFmOTZhYmI5NWUxIn0.nnjymWKGx0rLi4uYpjC5ewCnNhg35cr6Np2Wa3B34Hzu0Kelm5yxLLwBla9GwxM5LUjKuJ3entRCiMry0paLV_-0QAapsz5dwpJV8lfi931fooo8v15GNsomPN6oavDGsYYf79Wo7hpJi2SHKQDh0upy24W2hxBOWLv6gWWKpdvN7W3cEk_d9Gq7MV8m2JlOvtAmuhNvKe6VcOGoFp8Gd9TfpDJscOJHoYP_N5-6wAV0sz4_7D9R1K-8oclDlzxCdAy44Is9a51UIqq0UU7XQCq1wgb6pEsjauxp4eOU_LQKxsxczwJT82KZbjR3gmcgAnaAxJZs5zlkS4n7bEUuCg"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"payload\":\"Onboarding payload\"}"
+						},
+						"url": {
+							"raw": "https://localhost:8243/sirius/dispatcher/v1/onboarding",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8243",
+							"path": [
+								"sirius",
+								"dispatcher",
+								"v1",
+								"onboarding"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url-token",
+			"value": "localhost:8243"
+		},
+		{
+			"key": "query-token",
+			"value": "grant_type=password&username=admin&password=admin&scope=apim%3Aapi_key%2520apim%3Aapp_import_export%2520apim%3Aapp_manage%2520apim%3Astore_settings%2520apim%3Asub_alert_manage%2520apim%3Asub_manage%2520apim%3Asubscribe%2520openid"
+		},
+		{
+			"key": "access-token",
+			"value": ""
+		},
+		{
+			"key": "dcrClientId",
+			"value": ""
+		},
+		{
+			"key": "dcrClientSecret",
+			"value": ""
+		},
+		{
+			"key": "base64EncodedDCRCredentials",
+			"value": ""
+		},
+		{
+			"key": "applicationId",
+			"value": ""
+		},
+		{
+			"key": "applicationName",
+			"value": ""
+		},
+		{
+			"key": "keyMappingId",
+			"value": ""
+		},
+		{
+			"key": "keyManager",
+			"value": ""
+		},
+		{
+			"key": "appConsumerKey",
+			"value": ""
+		},
+		{
+			"key": "appConsumerSecret",
+			"value": ""
+		},
+		{
+			"key": "subscriptionId",
+			"value": ""
+		},
+		{
+			"key": "apiDispatcher",
+			"value": "c68b681e-5e44-492b-be60-afa185107d8f",
+			"type": "string"
+		},
+		{
+			"key": "base64UserCredentials",
+			"value": ""
+		}
+	]
+}

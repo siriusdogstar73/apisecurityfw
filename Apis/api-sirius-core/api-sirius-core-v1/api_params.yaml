@@ -1,0 +1,12 @@
+environments:
+  - name: local
+    endpoints:
+      production:
+        url:  http://172.17.0.1:4012
+      sandbox:
+        url:  http://172.17.0.1:4012
+
+deploy:
+  import:
+    update: true
+    preserveProvider: true

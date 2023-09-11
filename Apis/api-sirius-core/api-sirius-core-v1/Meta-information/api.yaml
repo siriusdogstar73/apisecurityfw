@@ -1,0 +1,81 @@
+id:
+  providerName: admin
+  apiName: api-sirius-core
+  version: v1
+  id: 0
+uuid: 18e885df-3118-436c-9f0c-841ce8ff87a7
+type: HTTP
+context: /sirius/core/v1
+contextTemplate: /sirius/core/{version}
+tags: []
+documents: []
+lastUpdated: Feb 22, 2022, 2:31:21 PM
+availableTiers:
+ -
+  name: Bronze
+  displayName: Bronze
+  description: Allows 1000 requests per minute
+  requestsPerMin: 1000
+  requestCount: 1000
+  unitTime: 1
+  timeUnit: min
+  tierPlan: FREE
+  stopOnQuotaReached: true
+availableSubscriptionLevelPolicies: []
+uriTemplates: []
+apiHeaderChanged: false
+apiResourcePatternsChanged: false
+status: PUBLISHED
+visibility: public
+gatewayLabels: []
+endpointSecured: false
+endpointAuthDigest: false
+transports: http,https
+advertiseOnly: false
+subscriptionAvailability: current_tenant
+corsConfiguration:
+  corsConfigurationEnabled: false
+  accessControlAllowOrigins:
+   - '*'
+  accessControlAllowCredentials: false
+  accessControlAllowHeaders:
+   - authorization
+   - Access-Control-Allow-Origin
+   - Content-Type
+   - SOAPAction
+   - apikey
+   - testKey
+  accessControlAllowMethods:
+   - GET
+   - PUT
+   - POST
+   - DELETE
+   - PATCH
+   - OPTIONS
+endpointConfig: '{"endpoint_type":"http","sandbox_endpoints":{"url":"http:\/\/172.17.0.1:4012"},"production_endpoints":{"url":"http:\/\/172.17.0.1:4012"}}'
+responseCache: Disabled
+cacheTimeout: 300
+implementation: ENDPOINT
+authorizationHeader: Authorization
+scopes: []
+isDefaultVersion: false
+isPublishedDefaultVersion: false
+keyManagers:
+ - all
+environments:
+ - Production and Sandbox
+createdTime: "1645540169000"
+additionalProperties: {}
+monetizationProperties: {}
+isMonetizationEnabled: false
+environmentList:
+ - SANDBOX
+ - PRODUCTION
+apiSecurity: oauth2,oauth_basic_auth_api_key_mandatory
+endpoints: []
+enableSchemaValidation: false
+apiCategories: []
+enableStore: true
+accessControl: all
+rating: 0.0
+isLatest: true
