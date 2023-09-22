@@ -20,7 +20,7 @@ The Sirius example shows a confidential and security dialogue between a Go consu
   * Maintain consumer credentials.
 
 * ETCD database with very high scalability and speed.
-  *Persist information in m
+  * Persist information in memory
 
 * Elliptic curve cryptography that protects the Framework
   * Ensure that communications are signed and confidential.
