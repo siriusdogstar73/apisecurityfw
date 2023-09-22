@@ -30,7 +30,7 @@ The Sirius example shows a confidential and security dialogue between a Go consu
 
 * Docker as PaaS
 
-![Descripción de la imagen](./image-20230918182310553.png "Leyenda de la imagen")
+![Descripción de la imagen](./images/image-20230918182310553.png "Leyenda de la imagen")
 
 ### 2. Secuence schema
 #### 2.1 Onboarding
