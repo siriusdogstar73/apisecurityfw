@@ -30,7 +30,7 @@ The Sirius example shows a confidential and security dialogue between a Go consu
 
 * Docker as PaaS
 
-![Descripción de la imagen](./images/Captura de pantalla 2023-09-28 a las 17.42.41.png "Leyenda de la imagen")
+![image-20230918191331406](./images/Captura de pantalla 2023-09-28 a las 17.42.41.png "Leyenda de la imagen")
 
 ### 2. Secuence schema
 #### 2.1 Onboarding
@@ -131,7 +131,7 @@ Now you can see the imported API in the publisher WSO2 console:
 ```
 Now you can see the imported API in the dev portal WSO2 console:
 
-#### ![image-20230918184607759](./images/Documents/Captura de pantalla 2023-10-01 a las 17.55.05.png)
+#### ![image-20230918184607759](./images/Captura de pantalla 2023-10-01 a las 17.55.05.png)
 
 ##### 3.1.3 Config microservices
 
@@ -139,7 +139,7 @@ In this first version it is necessary to deploy the micros with Docker to discov
 
 Step by step:
 
-4.1. Discover IP's
+###### 3.1.3.0 Discover IP's
 
 In each of 7 microservices root folder (dispatcher, register, searcher, cleaner, error, login, public) execute:
 ```bash
@@ -147,7 +147,7 @@ In each of 7 microservices root folder (dispatcher, register, searcher, cleaner,
 ```
 You have to write down each of your IPs from the property called 'Gateway' after running the command and inspecting in the 7 related containers, for example:
 
-#### ![image-20230918184607759](./images/Documents/Captura de pantalla 2023-10-01 a las 18.09.00.png)
+#### ![image-20230918184607759](./images/Captura de pantalla 2023-10-01 a las 18.09.00.png)
 
 
 
