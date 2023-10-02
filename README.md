@@ -39,7 +39,7 @@ In the first step of onboarding the secure dialog is estableced
 
 
 
-![image-20230918191331406](./images/image-20230918191331406.png)
+![image-20230918191331407](./images/image-20230918191331406.png)
 
 
 
@@ -57,7 +57,7 @@ When the onboarding is made the consumer can get token with his internal credent
 
 
 
-#### ![image-20230918184431860](./images/image-20230918184431860.png)
+![image-20230918184431860](./images/image-20230918184431860.png)
 
 
 
@@ -67,7 +67,7 @@ With the login token get it in the previous step the consumer can access the res
 
 
 
-#### ![image-20230918184607759](./images/image-20230918184607759.png)
+![image-20230918184607759](./images/image-20230918184607759.png)
 
 
 
@@ -82,25 +82,27 @@ All that you need to test it is:
 #### 3.1 Tutorial
 
 Follow the next steps:
+
 ##### 3.1.1 Install WSO2 with docker compose 
 
-      1. Cloning https://github.com/wso2/docker-apim
+Cloning https://github.com/wso2/docker-apim
     
-      2. For running it I replace the docker file images from the oficial WSO2 to the alpine, that are:
-      1. wso2/wso2am:3.2.0-alpine
-      2. wso2/wso2am-analytics-dashboard:3.2.0-alpine
-      3. wso2/wso2am-analytics-worker:3.2.0-alpine
-    
-      3. Up the docker compose, for example as a daemon.
+For running it I replace the docker file images from the oficial WSO2 to the alpine, that are:
+* wso2/wso2am:3.2.0-alpine
+* wso2/wso2am-analytics-dashboard:3.2.0-alpine
+* wso2/wso2am-analytics-worker:3.2.0-alpine
+  
+
+Up the docker compose, for example as a daemon.
 
 
 Then you can se all ok with something like this:
 
-#### ![image-20230918184607759](./images/Captura de pantalla 2023-09-27 a las 14.20.33.png)
+![image-20230918184607759](./images/Captura de pantalla 2023-09-27 a las 14.20.33.png)
 
 And accesing with admin / admin, we can see a clean API environment:
 
-#### ![image-20230918184607759](./images/Captura de pantalla 2023-09-27 a las 14.24.06.png)
+![image-20230918184607759](./images/Captura de pantalla 2023-09-27 a las 14.24.06.png)
 
 
 ##### 3.1.2 Install APIs
@@ -124,14 +126,14 @@ If you don't have a environment previasly created, you can go with this steps:
 
 Now you can see the imported API in the publisher WSO2 console:
 
-#### ![image-20230918184607759](./images/Captura de pantalla 2023-09-27 a las 14.48.11.png)
+![image-20230918184607759](./images/Captura de pantalla 2023-09-27 a las 14.48.11.png)
 
 ```bash
 ./apictl import-api --file ./../Apis/api-sirius-login/api-sirius-login-v1 --environment local -k --preserve-provider=false --update
 ```
 Now you can see the imported API in the dev portal WSO2 console:
 
-#### ![image-20230918184607759](./images/Captura de pantalla 2023-10-01 a las 17.55.05.png)
+![image-20230918184607759](./images/Captura de pantalla 2023-10-01 a las 17.55.05.png)
 
 ##### 3.1.3 Config microservices
 
@@ -147,7 +149,7 @@ In each of 7 microservices root folder (dispatcher, register, searcher, cleaner,
 ```
 You have to write down each of your IPs from the property called 'Gateway' after running the command and inspecting in the 7 related containers, for example:
 
-#### ![image-20230918184607759](./images/Captura de pantalla 2023-10-01 a las 18.09.00.png)
+![image-20230918184607759](./images/Captura de pantalla 2023-10-01 a las 18.09.00.png)
 
 
 
@@ -173,7 +175,7 @@ Same that above, you have to validate the WSO2 IP corresponding with API Manager
 
 Accessing to https://localhost:9443/devportal/applications create a new App that have to be suscribed at least to 'api-sirius-login', as can be see below:
 
-#### ![image-20230918184607759](./images/Captura de pantalla 2023-10-01 a las 18.21.54.png)
+![image-20230918184607759](./images/Captura de pantalla 2023-10-01 a las 18.21.54.png)
 
 4.4. Update client credentials
 
@@ -181,13 +183,13 @@ You have to update the property BASIC_GENERIC_CREDENTIALS in client app with the
 
 Also update the API Key for login API in the property API_KEY_CRYPTO of the client's constants.go file.  It can be obteined from developer portal sirius api:
 
-#### ![image-20230918184607759](./images/Captura de pantalla 2023-10-02 a las 11.54.35.png)
+![image-20230918184607759](./images/Captura de pantalla 2023-10-02 a las 11.54.35.png)
 
 ###### 3.1.3.4 Update API Id for Register microservice
 
 For allow the Micro consuming the dispatcher API it is necesary update the value of the body.ApiId property in the utils.go go code in the register micro service with the value that can be obtained by the following path:
 
-#### ![image-20230918184607759](./images/Captura de pantalla 2023-10-02 a las 11.48.07.png)
+![image-20230918184607759](./images/Captura de pantalla 2023-10-02 a las 11.48.07.png)
 
 
 
@@ -210,7 +212,7 @@ And it is interesting install also some software to visualize the data, for exam
 
 
 
-#### ![image-20230918184607759](./images/Captura de pantalla 2023-10-02 a las 11.59.47.png)
+![image-20230918184607759](./images/Captura de pantalla 2023-10-02 a las 11.59.47.png)
 
 
 ##### Test
@@ -223,9 +225,9 @@ go run main.go --operation="onboarding"
 
 As a result of this, you can see one app created and suscrited to API dispatcher in WSO2 platform and a registry in ETCD, as can see below:
 
-#### ![image-20230918184607759](./images/Captura de pantalla 2023-10-02 a las 13.20.35.png)
+![image-20230918184607759](./images/Captura de pantalla 2023-10-02 a las 13.20.35.png)
 
-#### ![image-20230918184607759](./images/Captura de pantalla 2023-10-02 a las 13.23.41.png)
+![image-20230918184607759](./images/Captura de pantalla 2023-10-02 a las 13.23.41.png)
 
 ```bash
 bash-3.2$ go run main.go --operation="onboarding"
@@ -242,7 +244,7 @@ go run main.go --operation="test"
 
 As a result of this, you can see a registry with the login token in ETCD, as can see below:
 
-#### ![image-20230918184607759](./images/Captura de pantalla 2023-10-02 a las 13.31.58.png)
+![image-20230918184607759](./images/Captura de pantalla 2023-10-02 a las 13.31.58.png)
 
 ```bash
 bash-3.2$ go run main.go --operation="test"
