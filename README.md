@@ -30,7 +30,7 @@ The Sirius example shows a confidential and security dialogue between a Go consu
 
 * Docker as PaaS
 
-![image-20230918191331406](./images/Captura de pantalla 2023-09-28 a las 17.42.41.png "Leyenda de la imagen")
+![image-20230918191331406](./images/Captura de pantalla 1.png "Leyenda de la imagen")
 
 ### 2. Secuence schema
 #### 2.1 Onboarding
@@ -98,11 +98,11 @@ Up the docker compose, for example as a daemon.
 
 Then you can se all ok with something like this:
 
-![image-20230918184607759](./images/Captura de pantalla 2023-09-27 a las 14.20.33.png)
+![image-20230918184607701](./images/image-tut1.png)
 
 And accesing with admin / admin, we can see a clean API environment:
 
-![image-20230918184607759](./images/Captura de pantalla 2023-09-27 a las 14.24.06.png)
+![image-20230918184607702](./images/image-tut2.png)
 
 
 ##### 3.1.2 Install APIs
@@ -126,14 +126,14 @@ If you don't have a environment previasly created, you can go with this steps:
 
 Now you can see the imported API in the publisher WSO2 console:
 
-![image-20230918184607759](./images/Captura de pantalla 2023-09-27 a las 14.48.11.png)
+![image-20230918184607703](./images/image-tut3.png)
 
 ```bash
 ./apictl import-api --file ./../Apis/api-sirius-login/api-sirius-login-v1 --environment local -k --preserve-provider=false --update
 ```
 Now you can see the imported API in the dev portal WSO2 console:
 
-![image-20230918184607759](./images/Captura de pantalla 2023-10-01 a las 17.55.05.png)
+![image-20230918184607704](./images/image-tut4.png)
 
 ##### 3.1.3 Config microservices
 
@@ -149,7 +149,7 @@ In each of 7 microservices root folder (dispatcher, register, searcher, cleaner,
 ```
 You have to write down each of your IPs from the property called 'Gateway' after running the command and inspecting in the 7 related containers, for example:
 
-![image-20230918184607759](./images/Captura de pantalla 2023-10-01 a las 18.09.00.png)
+![image-20230918184607705](./images/image-tut5.png)
 
 
 
@@ -175,7 +175,7 @@ Same that above, you have to validate the WSO2 IP corresponding with API Manager
 
 Accessing to https://localhost:9443/devportal/applications create a new App that have to be suscribed at least to 'api-sirius-login', as can be see below:
 
-![image-20230918184607759](./images/Captura de pantalla 2023-10-01 a las 18.21.54.png)
+![image-20230918184607706](./images/image-tut6.png)
 
 4.4. Update client credentials
 
@@ -183,13 +183,13 @@ You have to update the property BASIC_GENERIC_CREDENTIALS in client app with the
 
 Also update the API Key for login API in the property API_KEY_CRYPTO of the client's constants.go file.  It can be obteined from developer portal sirius api:
 
-![image-20230918184607759](./images/Captura de pantalla 2023-10-02 a las 11.54.35.png)
+![image-20230918184607707](./images/image-tut7.png)
 
 ###### 3.1.3.4 Update API Id for Register microservice
 
 For allow the Micro consuming the dispatcher API it is necesary update the value of the body.ApiId property in the utils.go go code in the register micro service with the value that can be obtained by the following path:
 
-![image-20230918184607759](./images/Captura de pantalla 2023-10-02 a las 11.48.07.png)
+![image-20230918184607759](./images/image-tut8.png)
 
 
 
@@ -212,7 +212,7 @@ And it is interesting install also some software to visualize the data, for exam
 
 
 
-![image-20230918184607759](./images/Captura de pantalla 2023-10-02 a las 11.59.47.png)
+![image-20230918184607709](./images/image-tut9.png)
 
 
 ##### Test
@@ -225,9 +225,9 @@ go run main.go --operation="onboarding"
 
 As a result of this, you can see one app created and suscrited to API dispatcher in WSO2 platform and a registry in ETCD, as can see below:
 
-![image-20230918184607759](./images/Captura de pantalla 2023-10-02 a las 13.20.35.png)
+![image-20230918184607710](./images/image-tut10.png)
 
-![image-20230918184607759](./images/Captura de pantalla 2023-10-02 a las 13.23.41.png)
+![image-20230918184607711](./images/image-tut11.png)
 
 ```bash
 bash-3.2$ go run main.go --operation="onboarding"
@@ -244,7 +244,7 @@ go run main.go --operation="test"
 
 As a result of this, you can see a registry with the login token in ETCD, as can see below:
 
-![image-20230918184607759](./images/Captura de pantalla 2023-10-02 a las 13.31.58.png)
+![image-20230918184607712](./images/image-tut12.png)
 
 ```bash
 bash-3.2$ go run main.go --operation="test"
