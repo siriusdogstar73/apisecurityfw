@@ -177,7 +177,7 @@ Accessing to https://localhost:9443/devportal/applications create a new App that
 
 ![image-20230918184607706](./images/image-tut6.png)
 
-4.4. Update client credentials
+###### 3.1.3.4 Update client credentials
 
 You have to update the property BASIC_GENERIC_CREDENTIALS in client app with the values of the sirius WSO2 app after convert client_id:client_secret to base64 encoding.
 
@@ -185,7 +185,7 @@ Also update the API Key for login API in the property API_KEY_CRYPTO of the clie
 
 ![image-20230918184607707](./images/image-tut7.png)
 
-###### 3.1.3.4 Update API Id for Register microservice
+###### 3.1.3.5 Update API Id for Register microservice
 
 For allow the Micro consuming the dispatcher API it is necesary update the value of the body.ApiId property in the utils.go go code in the register micro service with the value that can be obtained by the following path:
 
