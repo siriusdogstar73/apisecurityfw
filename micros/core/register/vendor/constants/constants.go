@@ -10,8 +10,8 @@ const (
 	HostWso2Local             = `https://localhost:8243`
 	HostWso2Docker            = `https://172.18.0.1:8243`
 	HostWso2PrivatePortDocker = `https://172.18.0.1:9443`
-	DOCKER_GW_IP              = `172.19.0.1`
-	DOCKER_GW_REGISTER_IP     = `172.18.0.1`
+	DOCKER_GW_IP              = `172.21.0.1`
+	DOCKER_GW_REGISTER_IP     = `172.21.0.1`
 	CONTENT_TYPE              = "Content-Type"
 	AUTH                      = "Authorization"
 	BASIC_GENERIC_CREDENTIALS = `Basic dHNNWEFDQ1g1MFFmZ1d3aHp2MHlMdGhDSGtjYTpPc3NYR21TZlFOSnhQaDcxbnJrSE5yalhJRFFh`

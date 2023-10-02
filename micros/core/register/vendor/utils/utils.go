@@ -222,7 +222,7 @@ func PostAddSuscriptionApp(clienteHTTP *http.Client, host string,
 	body := new(interfaces.AddSuscriptionAppRequest)
 	body.ApplicationId = applicationId
 	//REMEMBER: Id API apiDispatcher
-	body.ApiId = "c68b681e-5e44-492b-be60-afa185107d8f"
+	body.ApiId = "c2f7ed30-4ab9-4f43-98dc-3ac45e8aeec6"
 
 	body.ThrottlingPolicy = "Bronze"
 	body.RequestedThrottlingPolicy = "requestedThrottlingPolicy"

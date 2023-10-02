@@ -1,8 +1,0 @@
-version: "3.3"
-services:
-  sample:
-    build: .
-    container_name: "sample"
-    restart: always
-    ports:
-      - 33999:33999

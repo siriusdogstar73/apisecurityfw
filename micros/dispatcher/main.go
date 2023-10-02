@@ -18,6 +18,7 @@ var clienteHTTP = &http.Client{}
 
 func getPublicKeyHandler(w http.ResponseWriter, r *http.Request) {
 
+	log.Println("Called ")
 	uuid, publicKHex, privateKHex := cryptod.CreateCryptoOnboarding()
 	privateKSign, publicKSign := cryptod.CreateCryptoSign()
 

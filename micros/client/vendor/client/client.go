@@ -13,6 +13,7 @@ import (
 	"log"
 	"net/http"
 	"utils"
+	//"github.com/davecgh/go-spew/spew"
 )
 
 func GetPublicKey(clienteHTTP *http.Client) interfaces.ResGetPublicKeyPayload {
@@ -21,6 +22,7 @@ func GetPublicKey(clienteHTTP *http.Client) interfaces.ResGetPublicKeyPayload {
 		constants.TOKEN_URI_CRYPTO, constants.API_KEY_CRYPTO,
 		"GET")
 
+	//log.Println("spew.Sdump(bresponse)" + spew.Sdump(bresponse))
 	responseString := string(bresponse)
 
 	textBytes := []byte(responseString)
@@ -41,6 +43,7 @@ func GetGenericBody(clienteHTTP *http.Client,
 	method string) []byte {
 
 	request, err := http.NewRequest(method, host+uri, nil)
+
 	if err != nil {
 		log.Fatalf("Error creanting request getGenericBody: %v", err)
 	}
